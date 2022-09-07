@@ -1,0 +1,15 @@
+{
+  "manifest_version": 2,
+  "name": "Mossify",
+  "version": "0.1",
+
+  "description": "UI enhancements for the Moss plagiarism detector.",
+
+  "content_scripts": [
+    {
+      "matches": ["*://moss.stanford.edu/results/*"],
+      "css":     ["mossify.css"],
+      "js":      ["mossify.js"]
+    }
+  ]
+}

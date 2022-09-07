@@ -1,0 +1,107 @@
+#mossify-table-filter {
+  width: 100%;
+}
+
+#mossify-table-labels > th {
+  background-image: url("img/arrows.svg");
+  background-position: left center;
+  background-repeat: no-repeat;
+
+  cursor: pointer;
+  padding-left: 1em;
+  user-select: none;
+}
+
+#mossify-table-labels > th.sort-asc {
+  background-image: url("img/arrows-asc.svg");
+}
+
+#mossify-table-labels > th.sort-dsc {
+  background-image: url("img/arrows-dsc.svg");
+}
+
+#mossify-table {
+  text-align: right;
+}
+
+#mossify-table tr > :nth-child(2),
+#mossify-table tr > :nth-child(4) {
+  padding-right: 6pt;
+}
+
+#mossify-table tr > :nth-child(1),
+#mossify-table tr > :nth-child(3) {
+  text-align: left;
+}
+
+#mossify-screen {
+  top:    0;
+  left:   0;
+  right:  0;
+  bottom: 0;
+  position: fixed;
+
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+}
+
+#mossify-graph-modal {
+  top:    3em;
+  left:   3em;
+  right:  3em;
+  bottom: 3em;
+  position: fixed;
+
+  background-color: white;
+  box-shadow: 0 1em 2em black;
+}
+
+#mossify-graph {
+  top:    0;
+  left:   0;
+  right:  50%;
+  bottom: 0;
+  position: absolute;
+
+  cursor: pointer;
+}
+
+#mossify-graph-data {
+  top:    0;
+  left:   50%;
+  right:  0;
+  bottom: 2em;
+  position: absolute;
+
+  overflow-y: auto;
+}
+
+#mossify-graph-data table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+#mossify-graph-data td {
+  padding: 1px 6pt 1px 0;
+}
+
+#mossify-graph-data th {
+  padding: 6pt 0 0 0;
+  text-align: left;
+}
+
+#mossify-graph-data tr.accented a {
+  color: #ff00ff;
+}
+
+#mossify-graph-buttons {
+  left:   50%;
+  right:  0;
+  bottom: 0;
+  height: 2em;
+  position: absolute;
+
+  padding: 0 1em;
+  line-height: 2em;
+  text-align: right;
+}
