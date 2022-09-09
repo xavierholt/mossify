@@ -22,20 +22,37 @@ It also adds a graph view to help identify clusters of submissions:
 
 Mossify is currently a beta version.  I'll have official packages soon.
 
+
+## Installing for Development
+
+The instructions below assume that you have this repository cloned locally. Code
+changes you make after following them will _not_ be picked up automatically; you
+will need to use the "Reload" button on your browser's extension page,  and then
+refresh the Moss page you are viewing.
+
 ### Firefox
 
-This installs Mossify as a  temporary/development add-on  as in the instructions
-for the [your first extension][ffex] tutorial.  If you're doing development work
-on Mossify,  use the "Reload" button after following these steps  to get Firefox
-to load your latest changes.
+This installs Mossify as a  temporary/development add-on, as in the instructions
+for the  [your first extension][ffex] tutorial.  These temporary extensions will
+be uninstalled when you restart your browser.
 
-- Clone this repository.
-- In Firefox, enter `about:debugging` in the URL bar.
+- Enter `about:debugging` in the URL bar.
 - Click "This Firefox" in the sidebar.
 - Click the "Load Temporary Add-on..." button.
-- When prompted, select the `manifest.json` file.
+- When prompted, select the `src/manifest.json` file.
+
+### Chrome
+
+This loads Mossify as an "unpacked" extension, as in the [getting started][crex]
+tutorial.  These unpacked extensions seem to persist across browser restarts.
+
+- Enter `chrome://extensions` in the URL bar.
+- Enable "Developer mode" in the top right corner.
+- Click the "Load unpacked" button.
+- When prompted, select the `src` folder.
 
 
+[crex]: <https://developer.chrome.com/docs/extensions/mv3/getstarted/#unpacked>
 [ffex]: <https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Your_first_WebExtension#trying_it_out>
 [webx]: <https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions>
 [moss]: <http://moss.stanford.edu>
