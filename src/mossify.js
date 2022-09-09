@@ -48,7 +48,7 @@ class Group extends Node {
 
   add(file) {
     this.files.push(file)
-    for(const [neighbor, weight] of file.neighbors) {
+    for(const [neighbor, [weight, count]] of file.neighbors) {
       this.link(neighbor.group, weight)
     }
   }
@@ -58,8 +58,8 @@ class Group extends Node {
       return
     }
 
-    const w = this.neighbors.get(other) || 0
-    this.neighbors.set(other, Math.max(w, weight))
+    const w = this.neighbors.get(other) || [0, 0]
+    this.neighbors.set(other, [Math.max(w[0], weight), w[1] + 1])
     this.union(other)
 
     if(weight > this.worst) {
@@ -96,7 +96,7 @@ class File extends Node {
 
   link(other, line, weight) {
     this.edges.push(new Edge(other, line, weight))
-    this.neighbors.set(other, weight)
+    this.neighbors.set(other, [weight, 1])
     this.union(other)
 
     if(this.group) {

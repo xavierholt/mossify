@@ -126,7 +126,7 @@ function mossify_init_graph_view() {
     // context.clearRect(0, 0, w, h)
 
     for(const node of nodes) {
-      for(const [neighbor, wt] of node.neighbors) {
+      for(const [neighbor, [weight, count]] of node.neighbors) {
         if(node.id <= neighbor.id) {
           continue
         }
@@ -136,8 +136,9 @@ function mossify_init_graph_view() {
         context.lineTo(w * neighbor.x, h * neighbor.y)
         context.closePath()
 
-        const r = Math.round(256 * wt)
-        context.strokeStyle = `rgb(${r}, ${256-r}, 0, ${wt})`
+        const r = Math.round(256 * weight)
+        context.strokeStyle = `rgb(${r}, ${256-r}, 0, ${weight})`
+        context.lineWidth   = count
         context.stroke()
       }
     }
