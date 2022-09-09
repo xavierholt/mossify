@@ -187,7 +187,7 @@ function mossify_init_graph_view() {
   // Create the graph view window
   const screen = element('div', undefined, {id: 'mossify-screen'})
   screen.innerHTML = [
-    '<div id="mossify-graph-modal">',
+    '<div id="mossify-graph-modal" class="showing-groups">',
       '<canvas id="mossify-graph"></canvas>',
       '<div id="mossify-graph-data">',
         '<h3></h3>',
@@ -203,8 +203,9 @@ function mossify_init_graph_view() {
         '</table>',
       '</div>',
       '<div id="mossify-graph-buttons">',
-        ' [ <a href="#draw-files">Draw Files</a>',
-        ' | <a href="#draw-groups">Draw Groups</a>',
+        ' [ ',
+        '<span id="mossify-showing-files">Show Files | <a href="#show-groups">Show Groups</a></span>',
+        '<span id="mossify-showing-groups"><a href="#show-files">Show Files</a> | Show Groups</span>',
         ' | <a href="#redraw">Redraw</a>',
         ' | <a href="#close">Close</a>',
         ' ] ',
@@ -213,7 +214,7 @@ function mossify_init_graph_view() {
   ].join('')
 
   // Add it to the page
-  document.querySelector('body').appendChild(screen)
+  document.body.appendChild(screen)
 
 
   const canvas = document.getElementById('mossify-graph')
@@ -241,14 +242,22 @@ function mossify_init_graph_view() {
     select(best)
   })
 
-  document.querySelector('#mossify-graph-buttons > a[href="#draw-files"]').addEventListener('click', event => {
+  document.querySelector('#mossify-graph-buttons a[href="#show-files"]').addEventListener('click', event => {
+    const modal = document.getElementById('mossify-graph-modal')
+    modal.classList.remove('showing-groups')
+    modal.classList.add('showing-files')
     set_thing(File)
+
     event.stopPropagation()
     event.preventDefault()
   })
 
-  document.querySelector('#mossify-graph-buttons > a[href="#draw-groups"]').addEventListener('click', event => {
+  document.querySelector('#mossify-graph-buttons a[href="#show-groups"]').addEventListener('click', event => {
+    const modal = document.getElementById('mossify-graph-modal')
+    modal.classList.remove('showing-files')
+    modal.classList.add('showing-groups')
     set_thing(Group)
+
     event.stopPropagation()
     event.preventDefault()
   })

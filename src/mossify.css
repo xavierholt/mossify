@@ -39,6 +39,10 @@ td.mossify-filtered a {
   color: #808080;
 }
 
+td.mossify-filtered a:visited {
+  color: #706080;
+}
+
 #mossify-screen {
   top:    0;
   left:   0;
@@ -114,4 +118,13 @@ td.mossify-filtered a {
   padding: 0 1em;
   line-height: 2em;
   text-align: right;
+}
+
+#mossify-graph-buttons > span {
+  display: none;
+}
+
+#mossify-graph-modal.showing-files  #mossify-showing-files,
+#mossify-graph-modal.showing-groups #mossify-showing-groups {
+  display: inline;
 }
