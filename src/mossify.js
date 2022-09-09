@@ -376,4 +376,4 @@ mossify_init_table_filtering()
 mossify_init_downloading()
 mossify_init_graph_view()
 
-document.body.style.border = "5px solid blue"
+// document.body.style.border = "5px solid blue"
