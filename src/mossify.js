@@ -325,7 +325,7 @@ function mossify_init_downloading() {
 
   function download_csv(event) {
     if(event.target.getAttribute('href') === '#') {
-      const head = ['File 1,Match 1,File 2,Match 2,Lines']
+      const head = ['Diff Link,File 1,Match 1,File 2,Match 2,Lines']
       const data = head.concat(Line.ALL.map(line => [
         escape_csv(line.link),
         escape_csv(line.file1.path),
