@@ -20,7 +20,7 @@ function mossify_init_graph_view() {
     }
   }
 
-  function add_table_rows(table, file) {
+  function add_rows(tbody, file) {
     // helper function for select()
     for(const edge of file.edges) {
       let tr = element('tr')
@@ -49,7 +49,7 @@ function mossify_init_graph_view() {
         tr.dataset.node_id = edge.dst.id
       }
 
-      table.appendChild(tr)
+      tbody.appendChild(tr)
     }
   }
 
@@ -59,37 +59,34 @@ function mossify_init_graph_view() {
     }
 
     const header = document.querySelector('#mossify-graph-data > h3')
-    const table  = document.querySelector('#mossify-graph-data > table')
-    while(table.firstChild) {
-      table.removeChild(table.firstChild)
+    const tbody  = document.querySelector('#mossify-graph-data > table > tbody')
+    while(tbody.firstChild) {
+      tbody.removeChild(tbody.firstChild)
     }
 
     if(node === null) {
-      header.innerText = 'Nothing Selected'
-      const tr = element('tr')
-      const td = element('td', 'Click the graph to select a submission.', {colspan: 3})
-      table.appendChild(tr)
-      tr.appendChild(td)
+      header.innerText = 'Click the graph to select a submission.'
     }
     else if(Thing === File) {
       header.innerText = node.path
-      add_table_rows(table, node)
+      add_rows(tbody, node)
     }
     else {
       header.innerText = node.path
       for(const file of node.files) {
         const tr = element('tr')
         const th = element('th', file.path, {colspan: 3})
-        table.appendChild(tr)
+        tbody.appendChild(tr)
         tr.appendChild(th)
 
-        add_table_rows(table, file)
+        add_rows(tbody, file)
       }
     }
 
     SELECTED = node
     ACCENTED = null
     render(NODES)
+    filter()
   }
 
   function accent(node_id) {
@@ -98,12 +95,24 @@ function mossify_init_graph_view() {
     }
 
     ACCENTED = node_id
-    for(const tr of graph_table.children) {
+    for(const tr of graph_table_body.children) {
       const accented = tr.dataset.node_id == node_id
       tr.classList.toggle('accented', accented)
     }
 
     render(NODES)
+  }
+
+  function filter() {
+    const pattern = document.getElementById('mossify-graph-filter').value
+
+    for(const tr of graph_table_body.children) {
+      const file = tr.children[0]
+      if(file.tagName === 'TD') {
+        const show = file.innerText.includes(pattern)
+        file.classList.toggle('mossify-filtered', !show)
+      }
+    }
   }
 
   function render(nodes) {
@@ -133,16 +142,19 @@ function mossify_init_graph_view() {
       }
     }
 
-    context.globalAlpha = 1.0
+    const pattern = document.getElementById('mossify-graph-filter').value
     for(const node of nodes) {
-      if(node === SELECTED) {
-        context.fillStyle = '#0000ff'
-      }
-      else if(node.id == ACCENTED) {
+      if(node.id == ACCENTED) {
         context.fillStyle = '#ff00ff'
       }
-      else {
+      else if(node === SELECTED) {
+        context.fillStyle = '#0000ff'
+      }
+      else if(node.path.includes(pattern)) {
         context.fillStyle = node.color
+      }
+      else {
+        context.fillStyle = '#dddddd'
       }
 
       context.fillRect(w * node.x - 5, h * node.y - 5, 10, 10)
@@ -179,7 +191,16 @@ function mossify_init_graph_view() {
       '<canvas id="mossify-graph"></canvas>',
       '<div id="mossify-graph-data">',
         '<h3></h3>',
-        '<table></table>',
+        '<table>',
+          '<thead>',
+            '<tr>',
+              '<td colspan="999">',
+                '<input type="search" id="mossify-graph-filter" placeholder="filter by filename" />',
+              '</td>',
+            '</tr>',
+          '</thead>',
+          '<tbody></tbody>',
+        '</table>',
       '</div>',
       '<div id="mossify-graph-buttons">',
         ' [ <a href="#draw-files">Draw Files</a>',
@@ -201,9 +222,10 @@ function mossify_init_graph_view() {
   canvas.addEventListener('click', event => {
     const x = event.offsetX / canvas.offsetWidth
     const y = event.offsetY / canvas.offsetHeight
+    const d = 30 / (canvas.offsetWidth + canvas.offsetHeight)
 
     let best = null
-    let dist = 1000
+    let dist = d * d
 
     for(const node of NODES) {
       const dx = node.x - x
@@ -243,10 +265,17 @@ function mossify_init_graph_view() {
     event.preventDefault()
   })
 
+  document.getElementById('mossify-graph-filter').addEventListener('keyup', event => {
+    filter(event.target.value)
+    render(NODES)
+    event.stopPropagation()
+    event.preventDefault()
+  })
 
-  const graph_table = document.querySelector('#mossify-graph-data > table')
 
-  graph_table.addEventListener('mouseover', event => {
+  const graph_table_body = document.querySelector('#mossify-graph-data > table > tbody')
+
+  graph_table_body.addEventListener('mouseover', event => {
     let tr = event.target
     while(tr && tr.tagName !== 'TR') {
       tr = tr.parentElement
@@ -256,8 +285,8 @@ function mossify_init_graph_view() {
     accent(node_id)
   })
 
-  graph_table.addEventListener('mouseleave', event => {
-    if(event.target.tagName === 'TABLE') {
+  graph_table_body.addEventListener('mouseleave', event => {
+    if(event.target.tagName === 'TBODY') {
       accent(null)
     }
   })

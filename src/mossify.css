@@ -1,4 +1,5 @@
-#mossify-table-filter {
+#mossify-table-filter,
+#mossify-graph-filter {
   width: 100%;
 }
 
@@ -32,6 +33,10 @@
 #mossify-table tr > :nth-child(1),
 #mossify-table tr > :nth-child(3) {
   text-align: left;
+}
+
+td.mossify-filtered a {
+  color: #808080;
 }
 
 #mossify-screen {
@@ -74,6 +79,7 @@
   position: absolute;
 
   overflow-y: auto;
+  padding: 4pt;
 }
 
 #mossify-graph-data table {
@@ -88,6 +94,10 @@
 #mossify-graph-data th {
   padding: 6pt 0 0 0;
   text-align: left;
+}
+
+#mossify-graph-data tbody > tr:first-child > * {
+  padding-top: 6pt;
 }
 
 #mossify-graph-data tr.accented a {

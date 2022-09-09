@@ -294,7 +294,16 @@ function mossify_init_table_filtering() {
     const pattern = event.target.value
 
     for(const tr of tbody.children) {
-      if(tr.innerText.includes(pattern)) {
+      const file1 = tr.children[0]
+      const file2 = tr.children[2]
+
+      const show1 = file1.innerText.includes(pattern)
+      file1.classList.toggle('mossify-filtered', !show1)
+
+      const show2 = file2.innerText.includes(pattern)
+      file2.classList.toggle('mossify-filtered', !show2)
+
+      if(show1 || show2) {
         tr.style.display = 'table-row'
       }
       else {
@@ -377,3 +386,7 @@ mossify_init_downloading()
 mossify_init_graph_view()
 
 // document.body.style.border = "5px solid blue"
+// document.body.prepend(element('img', undefined, {
+//   style: 'height:1em; width:1em',
+//   src:   'img/logo-48.png'
+// }))
