@@ -18,5 +18,5 @@ It also adds a graph view to help identify clusters of submissions:
 ![Screenshot of the Mossify submission graph.](graph.png)
 
 
-[webx][https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions]
-[moss][http://moss.stanford.edu]
+[webx]: <https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions>
+[moss]: <http://moss.stanford.edu>
